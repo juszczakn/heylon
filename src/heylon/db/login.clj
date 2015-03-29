@@ -10,7 +10,7 @@
     (when-let [[col-names vals] data]
       (into {} (map #(hash-map % %2) col-names vals)))))
 
-(defn check-login
+(defn valid-user?
   [email password]
   (let [data (get-user-data email)]
     (when-let [enc-password (:password data)]

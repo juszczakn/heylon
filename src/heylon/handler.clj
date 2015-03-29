@@ -1,14 +1,15 @@
 (ns heylon.handler
-  (:use [clojure.java.io :only [resource]])
   (:require [compojure.core :refer :all]
             [compojure.route :as route]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
-            [heylon.db.login :as login]))
+            [heylon.controllers.login :as login]
+            [heylon.api.handler :as api-handler]))
 
 (defroutes app-routes
   (route/files "heylon/login.html")
   (route/files "heylon/index.html")
-  (POST "/heylon/login" {params :params} (str (login/check-login (:email params) (:password params))))
+  (POST "/heylon/login" request (login/login request))
+  api-handler/api-routes
   (route/not-found "Not Found"))
 
 (def my-site-defaults
