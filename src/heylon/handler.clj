@@ -9,6 +9,7 @@
   (route/files "heylon/login.html")
   (route/files "heylon/index.html")
   (POST "/heylon/login" request (login/login request))
+  (POST "/heylon/register" request (login/register request))
   api-handler/api-routes
   (route/not-found "Not Found"))
 

@@ -1,0 +1,30 @@
+<html>
+<body>
+    <form method="post" name="register" action="register" onSubmit="return checkFields()">
+        <p><input id="email" type="text" name="email" value="" placeholder="Email"></p>
+        <p><input id="name" type="text" name="name" value="" placeholder="Player Name"></p>
+        <p><input id="p" type="password" name="password" value="" placeholder="Password"></p>
+        <p><input id="pVerify" type="password" name="password-verify" value="" placeholder="Password"></p>
+        <p class="submit"><input type="submit" name="commit" value="Register"></p>
+    </form>
+    <script>
+     function checkFields() {
+         var p1 = document.register.p.value.trim();
+         var p2 = document.register.pVerify.value.trim();
+         console.log(p1 + p2)
+         if(p1 !== p2 || p1.length < 6) {
+             alert("Passwords must match and be longer than 6 characters.");
+             return false;
+         }
+         
+         var name = document.register.name.value.trim();
+         var email = document.register.email.value.trim();
+         if(name.length < 1 || email.length < 1) {
+             alert("Name and Email are required.");
+             return false;
+         }
+         return true;
+     }
+    </script>
+</body>
+</html>

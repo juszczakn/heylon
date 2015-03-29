@@ -17,3 +17,15 @@
       (if (password/check password enc-password)
         (dissoc data :password)
         false))))
+
+(defn- enter-new-user
+  [email name enc-password]
+  (sql/insert! info/heylon-db :users {:email email :name name :password enc-password})
+  true)
+
+(defn register-user
+  [email name password]
+  (let [not-registered? (empty? (get-user-data email))]
+    (if not-registered?
+      (enter-new-user email name (password/encrypt password))
+      nil)))
