@@ -13,8 +13,8 @@
   (route/files "heylon/create_kingdom.html")
   (POST "/heylon/login" request (login/login request))
   (POST "/heylon/register" request (login/register request))
-  (POST "/heylon/create_kingdom" request ())
-  api-handler/api-routes
+  api-handler/get-api-routes
+  api-handler/put-api-routes
   (route/not-found "Not Found"))
 
 (def my-site-defaults

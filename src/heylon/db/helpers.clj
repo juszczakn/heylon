@@ -1,6 +1,16 @@
 (ns heylon.db.helpers
   (:use [ring.util.response]))
 
+(defn to-long
+  [x]
+  (try
+    (Long. x)
+    (catch NumberFormatException e
+      (do
+        (println "Error converting " x)
+        (.printStackTrace e)
+        nil))))
+
 (defn simple-response-value
   [values]
   (-> (response (str values))

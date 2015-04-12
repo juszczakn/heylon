@@ -13,4 +13,10 @@ where ug.villageid = ?
   [villageid]
   (sql/query info/heylon-db [get-village-groups-query villageid]))
 
-
+(defn get-village-parcel
+  ([villageid]
+   (sql/query info/heylon-db ["select parcelid from village where villageid=?" villageid]))
+  ([kingdomid villageid]
+   (let [q "select parcelid from village 
+where kingdomid=? and villageid=?"]
+     (sql/query info/heylon-db [q kingdomid villageid]))))
