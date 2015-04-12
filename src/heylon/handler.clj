@@ -1,4 +1,5 @@
 (ns heylon.handler
+  (:require [clojure.java.io :as io])
   (:require [compojure.core :refer :all]
             [compojure.route :as route]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
@@ -6,10 +7,13 @@
             [heylon.api.handler :as api-handler]))
 
 (defroutes app-routes
+  (GET "/" [] (io/resource "public/heylon/index.html"))
   (route/files "heylon/login.html")
   (route/files "heylon/index.html")
+  (route/files "heylon/create_kingdom.html")
   (POST "/heylon/login" request (login/login request))
   (POST "/heylon/register" request (login/register request))
+  (POST "/heylon/create_kingdom" request ())
   api-handler/api-routes
   (route/not-found "Not Found"))
 

@@ -1,7 +1,7 @@
 (ns heylon.api.handler
   (:require [compojure.core :refer :all]
             [compojure.route :as route]
-            [heylon.db.user-info :as user-info]))
+            [heylon.db.get.user-info :as user-info]))
 
 (defroutes api-routes
   (GET "/api/user" {session :session} (user-info/get-user-name (:userid session)))

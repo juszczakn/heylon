@@ -1,4 +1,4 @@
-(ns heylon.db.user-info
+(ns heylon.db.get.user-info
   (:use [ring.util.response])
   (:require [compojure.route :as route]
             [clojure.java.jdbc :as sql]
