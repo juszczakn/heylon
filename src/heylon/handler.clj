@@ -3,6 +3,8 @@
   (:require [compojure.core :refer :all]
             [compojure.route :as route]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
+            [ring.middleware.keyword-params :refer [wrap-keyword-params]]
+            [ring.middleware.json :refer [wrap-json-params]]
             [heylon.controllers.login :as login]
             [heylon.api.handler :as api-handler]))
 
@@ -22,4 +24,7 @@
          (assoc (site-defaults :security) :anti-forgery false)))
 
 (def app
-  (wrap-defaults app-routes my-site-defaults))
+  (-> app-routes
+      (wrap-defaults my-site-defaults)
+      (wrap-keyword-params)
+      (wrap-json-params)))

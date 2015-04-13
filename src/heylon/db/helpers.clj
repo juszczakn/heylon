@@ -1,10 +1,10 @@
 (ns heylon.db.helpers
   (:use [ring.util.response]))
 
-(defn to-long
+(defn to-int
   [x]
   (try
-    (Long. x)
+    (Integer. x)
     (catch NumberFormatException e
       (do
         (println "Error converting " x)

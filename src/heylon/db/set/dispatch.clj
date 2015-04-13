@@ -25,19 +25,19 @@ on entity and actions required"
 ;; create
 (defmethod put-entity [:village :create] [userid kingdomid params]
   (let [{name :name parcelid :parcelid} params
-        parcelid (to-long parcelid)]
+        parcelid (to-int parcelid)]
     (kingdom/create-new-village! kingdomid parcelid name)))
 
 (defmethod put-entity [:unit :create] [userid kingdomid params]
   (let [{groupid :groupid amount :amount unit-type :unit-type} params
-        groupid (to-long groupid)
-        amount (to-long amount)
-        unit-type (to-long unit-type)]
+        groupid (to-int groupid)
+        amount (to-int amount)
+        unit-type (to-int unit-type)]
     (unit/create-units! kingdomid groupid amount unit-type)))
 
 (defmethod put-entity [:unit-group :create] [userid kingdomid params]
   (let [{villageid :villageid} params
-        villageid (to-long villageid)]
+        villageid (to-int villageid)]
     (unit/create-unit-group! kingdomid villageid)))
 
 

@@ -11,7 +11,7 @@
          params :params
          {kingdomid :kingdomid} :params} request
          userid (:userid session)
-         kingdomid (to-long kingdomid)]
+         kingdomid (to-int kingdomid)]
     (println request)
     (dispatch/put-entity userid kingdomid params)))
 
