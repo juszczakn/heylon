@@ -15,6 +15,7 @@
   ;; (route/files "heylon/create_kingdom.html")
   (POST "/api/login" request (login/login request))
   (POST "/api/register" request (login/register request))
+  (GET "/api/:entity" {session :session params :params} (entity/get session entity params))
   ;; api-handler/get-api-routes
   ;; api-handler/put-api-routes
   (route/not-found "Not Found"))
