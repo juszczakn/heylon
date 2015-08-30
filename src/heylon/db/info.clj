@@ -1,7 +1,7 @@
 (ns heylon.db.info
   (:require [clojure.edn :as edn]))
 
-(def db-prefs (edn/read-string (slurp "/home/nick/.heylon-prefs.edn")))
+(def db-prefs (edn/read-string (slurp "../.heylon-prefs.edn")))
 
 (def heylon-db
   {
