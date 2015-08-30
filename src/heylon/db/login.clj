@@ -15,7 +15,7 @@
 
 (defn register-user
   [email name password]
-  (let [not-registered? (empty? (get-user-data email))]
+  (let [not-registered? (empty? (get-all-user-data email))]
     (if not-registered?
       (enter-new-user! info/heylon-db email name (password/encrypt password))
       nil)))

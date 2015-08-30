@@ -3,9 +3,12 @@
 
 (defn json-response
   ([message stat]
-   (-> (response message)
-       (status stat)
-       (header "Content-Type" "text/json"))))
+   (let [message (if (map? message)
+                   message
+                   {:response message})]
+     (-> (response message)
+         (status stat)
+         (header "Content-Type" "text/json")))))
 
 (defn json-ok
   "json 200 response"
@@ -16,3 +19,10 @@
   "generic json 500 response"
   [message]
   (json-response message 500))
+
+(defn wrap-in-json
+  [f & args]
+  (try
+    (json-ok (apply f args))
+    (catch Exception e
+      (json-err {:error (.getMessage e)}))))

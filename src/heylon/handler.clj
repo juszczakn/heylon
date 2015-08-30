@@ -6,18 +6,17 @@
             [ring.middleware.keyword-params :refer [wrap-keyword-params]]
             [ring.middleware.json :refer [wrap-json-params wrap-json-response]]
             [heylon.controllers.login :as login]
-            [heylon.api.handler :as api-handler]))
+            [heylon.db.entity-get :refer [get-entity]]
+            [heylon.db.entity-set :refer [insert-entity! update-entity!]]
+            [heylon.api.json :refer [wrap-in-json]]))
 
 (defroutes app-routes
   (GET "/" [] (io/resource "public/heylon/index.html"))
-  ;; (route/files "heylon/login.html")
-  ;; (route/files "heylon/index.html")
-  ;; (route/files "heylon/create_kingdom.html")
   (POST "/api/login" request (login/login request))
   (POST "/api/register" request (login/register request))
-  (GET "/api/:entity" {session :session params :params} (entity/get session entity params))
-  ;; api-handler/get-api-routes
-  ;; api-handler/put-api-routes
+  (GET "/api/:entity" {params :params} (wrap-in-json get-entity (get params :entity) (dissoc params :entity)))
+  (POST "/api/:entity" {params :params} (wrap-in-json insert-entity! (get params :entity) (dissoc params :entity)))
+  (PUT "/api/:entity" {params :params} (wrap-in-json update-entity! (get params :entity) (dissoc params :entity)))
   (route/not-found "Not Found"))
 
 (def my-site-defaults
