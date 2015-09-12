@@ -9,13 +9,9 @@
                  [org.clojure/java.jdbc "0.4.1"]
                  [postgresql/postgresql "8.4-702.jdbc4"]
                  [crypto-password "0.1.3"]
-                 [yesql "0.4.2"]
-                 ;;[org.clojure/clojurescript "0.0-2127"]
-                 ]
+                 [yesql "0.5.0"]]
   :resource-paths ["resources"]
-  :plugins [[lein-ring "0.9.6"]
-            ;;[lein-cljsbuild "1.0.1"]
-            ]
+  :plugins [[lein-ring "0.9.6"]]
   :ring {:handler heylon.handler/app}
   :profiles
   {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]

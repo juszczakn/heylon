@@ -1,8 +1,9 @@
 (ns heylon.db.entity-set
   (:require [heylon.db.info :as info]
-            [yesql.core :refer [defqueries]]))
+            [yesql.core :refer [defqueries]]
+            [clojure.string :as string]))
 
-(defqueries "sql/entity_set.sql")
+(defqueries "sql/entity_set.sql" {:connection info/heylon-db})
 
 (defn- sort-params
   [params]
@@ -13,11 +14,10 @@
   "call any insert query in sql/entity_set.sql"
   [entity params]
   (println entity params)
-  (let [query-name (ns-resolve 'heylon.db.entity-set (symbol (str "insert-" entity "!")))
-        params (sort-params params)]
-    (println params)
+  (let [query-name (ns-resolve 'heylon.db.entity-set
+                               (symbol (str "insert-" entity "!")))]
     (try
-      (apply query-name info/heylon-db params)
+      (query-name params)
       (catch Exception e
         (throw (NoSuchMethodException. (str "Invalid query. " (.getMessage e))))))))
 
@@ -25,10 +25,10 @@
   "Only works with single params currently.
 See get-entity."
   [entity params]
-  (let [param-name (name (first (keys params)))
-        param-val (first (vals params))
-        query-name (ns-resolve 'heylon.db.entity-set (symbol (str "update-" entity "--" param-name "!")))]
+  (let [param-names (sort (map name (keys params)))
+        query-name (ns-resolve 'heylon.db.entity-set
+                               (symbol (str "update-" entity "--" (string/join "-" param-names) "!")))]
     (try
-      (query-name info/heylon-db param-val)
+      (query-name params)
       (catch Exception e
         (throw (NoSuchMethodException. "Invalid query."))))))
